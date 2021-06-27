@@ -1,30 +1,51 @@
-.question {
-  background: #fefefe;
+import styled, { css } from 'styled-components';
+
+export const QuestionContainer = styled.div`
+  background: ${props => props.theme.colors.backgroundBox};
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 24px;
+  ${props => props.theme.title === 'dark' ? css`
+    border: 1px solid #a8a8b3;
+  ` : ''}
 
-  & + .question {
+  & + & {
     margin-top: 8px;
   }
 
   &.highlighted {
-    background: #f4f0ff;
-    border: 1px solid #835afd;
+    background: #f8f8f8;
+    border: 1px solid ${props => props.theme.colors.primary};
+
+    p {
+      ${props => props.theme.title === 'dark' ? css`
+        color: #29292E;
+      ` : ''}
+    }
 
     footer .user-info span {
-      color: #29292e;
+      color: #737380;
     }
   }
 
   &.answered {
     background: #dbdcdd;
+    p {
+      ${props => props.theme.title === 'dark' ? css`
+        color: #29292E;
+      ` : ''}
+    }
+
+    footer .user-info span {
+      color: #737380;
+    }
   }
 
   p {
-    color: #292923;
+    color: ${props => props.theme.colors.text};
     margin-bottom: 10px;
   }
+
 
   footer {
     display: flex;
@@ -49,7 +70,7 @@
 
       span {
         margin-left: 8px;
-        color: #737380;
+        color: ${props => props.theme.title === 'dark' ? '#FFF' : '#737380'};
         font-size: 14px;
       }
     }
@@ -84,4 +105,4 @@
       }
     }
   }
-}
+`;

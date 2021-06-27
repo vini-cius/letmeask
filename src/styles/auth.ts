@@ -1,4 +1,6 @@
-#page-auth {
+import styled from 'styled-components';
+
+export const PageAuth = styled.div`
   display: flex;
   align-items: stretch;
   height: 100vh;
@@ -6,8 +8,8 @@
   aside {
     flex: 7;
 
-    background: #835afd;
-    color: #fff;
+    background: ${props => props.theme.colors.primary};
+    color: #FFF;
     
     display: flex;
     flex-direction: column;
@@ -85,7 +87,7 @@
       margin-top: 16px;
 
       a {
-        color: #e559f9;
+        color: ${props => props.theme.colors.secondary};
       }
     }
   }
@@ -118,7 +120,7 @@
 
   .separator {
     font-size: 14px;
-    color: #a8a8b3;
+    color: ${props => props.theme.title === 'dark' ? '#FFF' : '#a8a8b3' };
 
     margin: 32px;
     display: flex;
@@ -128,7 +130,7 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: #a8a8b3;
+      background: ${props => props.theme.title === 'dark' ? '#FFF' : '#a8a8b3' };
       margin-right: 16px;
     }
 
@@ -136,8 +138,8 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: #a8a8b3;
+      background: ${props => props.theme.title === 'dark' ? '#FFF' : '#a8a8b3' };
       margin-left: 16px;
     }
   }
-}
+`;

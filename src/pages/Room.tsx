@@ -1,28 +1,35 @@
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import logoImg from '../assets/images/logo.svg';
 
-import { Button } from '../components/Button';
+import { database } from '../services/firebase';
+
+import { DefaultButton } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
+import { ThemeSwitch } from '../components/ThemeSwitch';
 
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
-import { database } from '../services/firebase';
+import { useTheme } from '../hooks/useTheme';
 
-import '../styles/room.scss';
+import logoImg from '../assets/images/logo.svg';
+import logoDarkImg from '../assets/images/logo-dark.svg';
+
+import { PageRoom } from '../styles/room';
 
 type RoomParams = {
   id: string;
 }
 
 export function Room() {
-  const { user, signInWithGoogle } = useAuth();
   const params = useParams<RoomParams>();
-  const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
 
-  const { title, questions } = useRoom(roomId)
+  const { user, signInWithGoogle } = useAuth();
+  const { title, questions } = useRoom(roomId);
+  const { theme } = useTheme();
+
+  const [newQuestion, setNewQuestion] = useState('');
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -61,11 +68,15 @@ export function Room() {
   }
 
   return (
-    <div id="page-room">
+    <PageRoom>
       <header>
         <div className="content">
-          <img src={logoImg} alt="letmeask" />
-          <RoomCode code={roomId} />
+          <img src={theme.title === 'dark' ? logoDarkImg : logoImg} alt="letmeask" />
+
+          <div>
+            <RoomCode code={roomId} />
+            <ThemeSwitch />
+          </div>
         </div>
       </header>
 
@@ -93,7 +104,7 @@ export function Room() {
             )}
 
 
-            <Button type="submit" disabled={!user}>Enviar pergunta</Button>
+            <DefaultButton type="submit" disabled={!user}>Enviar pergunta</DefaultButton>
           </div>
         </form>
 
@@ -129,6 +140,6 @@ export function Room() {
           }
         </div>
       </main>
-    </div>
+    </PageRoom>
   );
 }
